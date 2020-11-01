@@ -2,32 +2,36 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res } from '@nest
 import { from } from 'rxjs';
 import {Response, Request} from 'express';
 import { CreateItemDTO } from './DTO/create-items.dto';
+import { ItemsService } from './items.service';
+import { Item } from './Interface/item.interface';
 
 @Controller('items')
 export class ItemsController {
+  constructor(private readonly itemService : ItemsService){}
+
   @Get()
-  findAll(@Req()  req:Request, @Res() res:Response ): Response {
-    console.log(req.url);
-    return res.status(200).send("Hello");
+  findAll(): Item[] {
+    return this.itemService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param() params):string{
-    return `Item with id: ${params.id}`
+  findOne(@Param() params):Item{
+    return this.itemService.findOne(params.id);
   }
 
   @Delete(':id')
-  deleteOne(@Param('id') id): string{
-    return `item :${id} is deleted.`
+  deleteOne(@Param('id') id): Item[] {
+    return this.itemService.deleteOne(id);
+    
   }
 
   @Post()  
-  create(@Body() data: CreateItemDTO):string {
-    return `${data.name}: with ${data.desc} and ${data.qty}`
+  create(@Body() data: CreateItemDTO):Item[] {
+    return this.itemService.create(data);
   }
 
   @Put(':id')
-  updateOne(@Body() data: CreateItemDTO, @Param('id') id): string{
-    return `${id} is updated into ${data.name} with desc: ${data.desc} and ${data.qty}`
+  updateOne(@Body() data: CreateItemDTO, @Param('id') id): Item[] {
+    return this.itemService.updateOne(data, id);
   }
 }

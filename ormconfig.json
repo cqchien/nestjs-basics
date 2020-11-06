@@ -1,0 +1,10 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3030,
+  "username": "root",
+  "password": "",
+  "database": "nestjs_basics",
+  "entities": ["src/user/model/user.schema.ts","src/profile/model/profile.schema.ts" ],
+  "synchronize": true
+}

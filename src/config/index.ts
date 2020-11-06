@@ -1,3 +1,3 @@
 export default {
-  mongoURL: 'mongodb+srv://caochientp1:chiengu0@cluster0.ulf8y.mongodb.net/nestjs-basics?retryWrites=true&w=majority'
-}
+  mongoURL: 'mongodb://localhost:27017/nestjs_basics',
+};

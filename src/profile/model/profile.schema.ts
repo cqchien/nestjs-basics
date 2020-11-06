@@ -2,11 +2,8 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'profiles' })
 export class ProfileEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
-  gender: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column()
   photo: string;

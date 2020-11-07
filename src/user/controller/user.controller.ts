@@ -1,19 +1,41 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { User } from '../model/user.interface';
 import { UserService } from '../service/user.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userSer: UserService){};
+  constructor(private readonly userSer: UserService) {}
 
   @Get()
-  findAll(): Observable<User[]>{
-    return this.userSer.findAll();
+  async indAll(): Promise<User[]> {
+    return await this.userSer.findAll();
   }
 
-  @Post(':profileId')
-  create(@Body() data: User, @Param('profileId') profileId): Promise<Observable<User>>{
-    return this.userSer.create(data, profileId);
+  @Post()
+  async create(@Body() data: User): Promise<User> {
+    return await this.userSer.create(data);
+  }
+
+  @Get(':userId')
+  async findOne(@Param('userId') id): Promise<User> {
+    return await this.userSer.findOne(id);
+  }
+
+  @Put(':userId')
+  async updateOne(@Body() data: User, @Param('userId') id): Promise<any> {
+    return await this.userSer.updateOne(data, id);
+  }
+
+  @Delete(':userId')
+  async deleteOne(@Param('userId') id): Promise<any> {
+    return await this.userSer.deleteOne(id);
   }
 }

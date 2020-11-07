@@ -1,6 +1,6 @@
-export interface User{
-  id?: string,
-  name: string,
-  desc: string,
-  qty: number
+export interface User {
+  id?: string;
+  name: string;
+  desc: string;
+  qty: number;
 }

@@ -1,20 +1,48 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { Profile } from '../model/profile.interface';
 import { ProfileService } from '../services/profile.service';
 
 @Controller('profile')
 export class ProfileController {
-  constructor(private readonly profileSer: ProfileService){};
+  constructor(private readonly profileSer: ProfileService) {}
 
   @Get()
-  findAll(): Observable<Profile[]>{
-    return this.profileSer.findAll();
+  async findAll(): Promise<Profile[]> {
+    return await this.profileSer.findAll();
   }
 
-  @Post()
-  create(@Body() data: Profile):  Observable<Profile>{
-    return this.profileSer.create(data);
+  @Post(':userId')
+  async create(@Body() data: Profile, @Param('userId') id): Promise<Profile> {
+    return await this.profileSer.create(data, id);
+  }
+
+  @Get(':profileId')
+  findOne(@Param('profileId') profileId: string): Promise<Profile> {
+    return this.profileSer.findOne(profileId);
+  }
+
+  @Put(':userId/:profileId')
+  updateOne(
+    @Body() data: Profile,
+    @Param() params: ['userId', 'profileId'],
+  ): Promise<any> {
+    return this.profileSer.updateOne(
+      data,
+      params['profileId'],
+      params['userId'],
+    );
+  }
+
+  @Delete(':userId/:profileId')
+  deleteOne(@Param() params: ['userId', 'profileId']): Promise<any> {
+    return this.profileSer.deleteOne(params['profileId'], params['userId']);
   }
 }
- 

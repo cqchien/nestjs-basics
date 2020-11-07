@@ -1,4 +1,4 @@
-export interface Profile{
-  id?: string,
-  photo: string
+export interface Profile {
+  id?: string;
+  photo: string;
 }
